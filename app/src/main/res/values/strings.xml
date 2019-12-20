@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Rest</string>
+
+    <string-array name="types">
+        <item>Starters</item>
+        <item>Main</item>
+        <item>Deserts</item>
+        <item>Drinks</item>
+        <item>Alcohol</item>
+    </string-array>
+</resources>

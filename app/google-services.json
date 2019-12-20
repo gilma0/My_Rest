@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "114735759913",
+    "firebase_url": "https://my-rest-eed56.firebaseio.com",
+    "project_id": "my-rest-eed56",
+    "storage_bucket": "my-rest-eed56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114735759913:android:50afd9cdbd3f2eadb49238",
+        "android_client_info": {
+          "package_name": "com.example.myrest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114735759913-fh1lsvdakcbpg5ipv5hktvj2ao0uuj12.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myrest",
+            "certificate_hash": "1325e6b762f431c90caa474f58cb8ffa5fc90ddb"
+          }
+        },
+        {
+          "client_id": "114735759913-q94kn30fnu7i3gmcnpuvmnt0f3t87lf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAXPZ5EvJRj6bkE8InsvCTr7wkJUlTQQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114735759913-q94kn30fnu7i3gmcnpuvmnt0f3t87lf1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
