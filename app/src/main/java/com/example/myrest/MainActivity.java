@@ -1,6 +1,7 @@
 package com.example.myrest;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -17,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText TextEmail;
     private EditText TextPassword;
+    private String adminPass;
+    private String adminUser;
     private Button registerBtn, loginBtn;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
@@ -49,7 +55,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerBtn = (Button) findViewById(R.id.registerButton);
         loginBtn = (Button) findViewById(R.id.loginButton);
 
+        getAdmin();
+
         progressDialog = new ProgressDialog(this);
+
+
+
+       /* mDatabaseReference = mDatabase.getReference().child("manager").child("Main");
+        adminUser = mDatabase.getReference().child("manager").child("user").toString();
+        Toast.makeText(this,adminUser,Toast.LENGTH_LONG).show();
+        adminPass = mDatabase.getReference().child("manager").child("password").toString();*/
 
         //listeners
         registerBtn.setOnClickListener(this);
@@ -111,11 +126,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loginUser() {
+        getAdmin();
         //getting email and password
         final String email = TextEmail.getText().toString().trim();
         String password = TextPassword.getText().toString().trim();
 
-        if (email.equals("admin") && password.equals("admin")){
+        if (email.equals(adminUser) && password.equals(adminPass)){
             Intent intentAdmin = new Intent(getApplication(), AdminActivity.class);
             startActivity(intentAdmin);
             return;
@@ -180,6 +196,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
+    }
+
+    public void getAdmin(){
+        mDatabaseReference = mDatabase.getReference().child("manager");
+        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                manager value = dataSnapshot.getValue(manager.class);
+                adminUser = value.getUser();
+                adminPass = value.getPassword();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

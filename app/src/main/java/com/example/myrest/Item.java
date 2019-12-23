@@ -4,7 +4,7 @@ public class Item {
     private String typeOf;
     private String name;
     private String description;
-    private String ImageUrl;
+    private String imageUrl;
 
     public Item(){
 
@@ -13,7 +13,7 @@ public class Item {
         this.name = name;
         this.typeOf = type;
         this.description = description;
-        this.ImageUrl = url;
+        this.imageUrl = url;
     }
     public String getName(){
         return name;
@@ -25,7 +25,7 @@ public class Item {
         return description;
     }
     public String getImageUrl(){
-        return ImageUrl;
+        return imageUrl;
     }
 
     public void setName(String name){
@@ -38,7 +38,7 @@ public class Item {
         this.description = description;
     }
     public void setUrl(String url){
-        this.ImageUrl = url;
+        this.imageUrl = url;
     }
 }
 

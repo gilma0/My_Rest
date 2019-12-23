@@ -25,6 +25,55 @@ public class mainMenu extends AppCompatActivity {
     private ListView lv;
     private FirebaseDatabase mydata;
     DatabaseReference myref;
+    ArrayList<Item> list = new ArrayList<>();
+    //ArrayList<String> descList = new ArrayList<>();
+    CustomListAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_alcohol_menu);
+
+        mydata = FirebaseDatabase.getInstance();
+        myref = mydata.getReference().child("menu").child("Main");
+
+        lv = (ListView) findViewById(R.id.alcoholListView);
+        myref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Item value = dataSnapshot.getValue(Item.class);
+                list.add(value);
+                // descList.add(value.getDescription());
+                //arrayList.add(value.getName());
+                adapter = new CustomListAdapter(mainMenu.this, R.layout.main_layout, list);
+                lv.setAdapter(adapter);
+                //arrayAdapter = new ArrayAdapter<String>(alcoholMenu.this, android.R.layout.simple_list_item_1, descList);
+                //lv.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    /*private ListView lv;
+    private FirebaseDatabase mydata;
+    DatabaseReference myref;
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
     //private FirebaseListAdapter adapter;
@@ -67,7 +116,7 @@ public class mainMenu extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
      /*   lv = (ListView) findViewById(R.id.mainListView);
