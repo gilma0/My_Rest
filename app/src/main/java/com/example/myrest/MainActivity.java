@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
-    private int userFlag = 0;
+    //private int userFlag = 0;
 
 
     @Override
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loginUser() {
-        getAdmin();
+        //getAdmin();
         //getting email and password
         final String email = TextEmail.getText().toString().trim();
         String password = TextPassword.getText().toString().trim();
