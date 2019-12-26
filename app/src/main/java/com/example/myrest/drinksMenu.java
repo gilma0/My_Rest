@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class drinksMenu extends AppCompatActivity {
     private ListView lv;
     private FirebaseDatabase mydata;
+    Item selectedItem; //item to be moved to order
+    User user;//user to get from previous activity for order
     DatabaseReference myref;
     ArrayList<Item> list = new ArrayList<>();
     //ArrayList<String> descList = new ArrayList<>();

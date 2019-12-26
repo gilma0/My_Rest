@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class AdminActivity extends AppCompatActivity {
     private Button addItem;
+    User user;//user to get from previous activity for order, even admin can order and act as user
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

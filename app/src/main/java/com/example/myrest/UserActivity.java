@@ -86,22 +86,27 @@ public class UserActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
                     Intent intent = new Intent(UserActivity.this,startersMenu.class);
+                    //intent.putExtra(startersMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
                 if(position == 1){
                     Intent intent = new Intent(UserActivity.this,mainMenu.class);
+                    //intent.putExtra(mainMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
                 if(position == 2){
                     Intent intent = new Intent(UserActivity.this,desertsMenu.class);
+                    //intent.putExtra(desertsMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
                 if(position == 3){
                     Intent intent = new Intent(UserActivity.this,drinksMenu.class);
+                    //intent.putExtra(drinksMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
                 if(position == 4){
                     Intent intent = new Intent(UserActivity.this,alcoholMenu.class);
+                    //intent.putExtra(alcoholMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
             }

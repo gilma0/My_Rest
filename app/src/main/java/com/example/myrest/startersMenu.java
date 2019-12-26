@@ -19,8 +19,10 @@ import java.util.ArrayList;
 public class startersMenu extends AppCompatActivity {
     private ListView lv;
     private FirebaseDatabase mydata;
+    User user;//user to get from previous activity for order
     DatabaseReference myref;
     ArrayList<Item> list = new ArrayList<>();
+    Item selectedItem; //item to be moved to order
     //ArrayList<String> descList = new ArrayList<>();
     CustomListAdapter adapter;
 

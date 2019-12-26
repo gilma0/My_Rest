@@ -19,6 +19,7 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
     private String type,name, description, url;
     private EditText editName, imageUrl, editDescription;
     private Button add;
+    private Item item;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();

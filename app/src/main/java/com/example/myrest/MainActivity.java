@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText TextEmail;
+    private User userForNext;
     private EditText TextPassword;
     private String adminPass;
     private String adminUser;

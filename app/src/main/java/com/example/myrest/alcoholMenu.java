@@ -26,6 +26,8 @@ public class alcoholMenu extends AppCompatActivity {
     private ListView lv;
     private FirebaseDatabase mydata;
     DatabaseReference myref;
+    Item selectedItem; //item to be moved to order
+    User user;//user to get from previous activity for order
     ArrayList<Item> list = new ArrayList<>();
     //ArrayList<String> descList = new ArrayList<>();
     CustomListAdapter adapter;
