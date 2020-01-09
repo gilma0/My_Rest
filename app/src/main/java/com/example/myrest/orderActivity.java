@@ -56,7 +56,7 @@ public class orderActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order order = new order(user,itemID);
+                order order = new order(user.replace(".",","),itemID);
                 mDatabaseReference = mDatabase.getReference().child("orders").push();
                 mDatabaseReference.setValue(order);
             }

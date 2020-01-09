@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
+    private User value;
     //private int userFlag = 0;
 
 
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         registerAsAdmin = (CheckBox) findViewById(R.id.registerAsAdmin);
 
-        getAdmin();
+        //getAdmin();
 
         progressDialog = new ProgressDialog(this);
 
@@ -133,16 +135,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loginUser() {
         //getAdmin();
         //getting email and password
+        //User temp = new User();
         final String email = TextEmail.getText().toString().trim();
-        String password = TextPassword.getText().toString().trim();
+        final String password = TextPassword.getText().toString().trim();
+        //Toast.makeText(MainActivity.this,"aba",Toast.LENGTH_LONG).show();
 
-        if (email.equals(adminUser) && password.equals(adminPass)){
+        /*if (email.equals(adminUser) && password.equals(adminPass)){
             Intent intentAdmin = new Intent(getApplication(), AdminActivity.class);
             startActivity(intentAdmin);
             return;
-        }
+        }*/
+        mDatabaseReference = mDatabase.getReference().child("users");
+        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //User value = dataSnapshot.getValue(User.class);
+                if(dataSnapshot.getKey().equals(email.replace(".",","))){
+                    value = dataSnapshot.getValue(User.class);
+                    login(email,password);
+                }
+                //Toast.makeText(MainActivity.this, "aba",Toast.LENGTH_LONG).show();
+            }
 
-        //checking for fields
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+        /*//checking for fields
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
@@ -181,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         progressDialog.dismiss();
                     }
-                });
+                });*/
 
 
     }
@@ -233,6 +272,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+    }
+
+    public void login(final String email, String password){
+        //checking for fields
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        progressDialog.setMessage("Working...");
+        progressDialog.show();
+
+        //logging in
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //checking if success
+                        if (task.isSuccessful()) {
+                            //int pos = email.indexOf("@");
+                            //String user = email.substring(0, pos);
+                            Toast.makeText(MainActivity.this, "Welcome: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
+                            if(value.isAdmin() == false) {
+                                Intent intent = new Intent(getApplication(), UserActivity.class);
+                                intent.putExtra("userID", email);
+                                startActivity(intent);
+                            }else{
+                                Intent intent = new Intent(getApplication(), AdminActivity.class);
+                                intent.putExtra("userID", email);
+                                startActivity(intent);
+                            }
+
+
+                        } else {
+
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {//checking for collisions
+                                Toast.makeText(MainActivity.this, "User Doesn't exist ", Toast.LENGTH_SHORT).show();
+                                value = null;
+                            } else {
+                                Toast.makeText(MainActivity.this, "Something went wrong, check email and password ", Toast.LENGTH_LONG).show();
+                                value = null;
+                            }
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
     }
 
 }
