@@ -85,7 +85,10 @@ public class drinksMenu extends AppCompatActivity {
                 Intent intent = new Intent(getApplication(), orderActivity.class);
                 intent.putExtra("userID", user);
                 intent.putExtra("itemName", choice.getName());
+                intent.putExtra("itemIMG", choice.getImageUrl());
                 intent.putExtra("itemID", keyList.get(position));
+                intent.putExtra("itemType", choice.getTypeOf());
+                intent.putExtra("itemDesc", choice.getDescription());
                 startActivity(intent);
             }
         });
