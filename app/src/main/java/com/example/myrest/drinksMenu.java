@@ -4,9 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,17 +24,20 @@ public class drinksMenu extends AppCompatActivity {
     private ListView lv;
     private FirebaseDatabase mydata;
     Item selectedItem; //item to be moved to order
-    User user;//user to get from previous activity for order
+    //User user;//user to get from previous activity for order
+    static String user;
     DatabaseReference myref;
     ArrayList<Item> list = new ArrayList<>();
     //ArrayList<String> descList = new ArrayList<>();
     CustomListAdapter adapter;
+    ArrayList<String> keyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alcohol_menu);
 
+        user = getIntent().getExtras().getString("userID");
         mydata = FirebaseDatabase.getInstance();
         myref = mydata.getReference().child("menu").child("Drinks");
 
@@ -40,6 +47,7 @@ public class drinksMenu extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Item value = dataSnapshot.getValue(Item.class);
                 list.add(value);
+                keyList.add(dataSnapshot.getKey());
                 // descList.add(value.getDescription());
                 //arrayList.add(value.getName());
                 adapter = new CustomListAdapter(drinksMenu.this, R.layout.main_layout, list);
@@ -66,6 +74,19 @@ public class drinksMenu extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Item choice = list.get(position);
+                Toast.makeText(drinksMenu.this, keyList.get(position), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplication(), orderActivity.class);
+                intent.putExtra("userID", user);
+                intent.putExtra("itemName", choice.getName());
+                intent.putExtra("itemID", keyList.get(position));
+                startActivity(intent);
             }
         });
     /*private ListView lv;

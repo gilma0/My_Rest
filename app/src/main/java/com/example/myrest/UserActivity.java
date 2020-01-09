@@ -23,7 +23,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity {
-    public static final String user="names";
+    static String user;
     ListView typeList;
     private FirebaseDatabase mydata;
     DatabaseReference myref;
@@ -35,6 +35,8 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        user = getIntent().getExtras().getString("userID");
         typeList=(ListView)findViewById(R.id.typeList);
         mydata = FirebaseDatabase.getInstance();
         myref = mydata.getReference().child("typeIcons");
@@ -101,6 +103,7 @@ public class UserActivity extends AppCompatActivity {
                 }
                 if(position == 3){
                     Intent intent = new Intent(UserActivity.this,drinksMenu.class);
+                    intent.putExtra("userID", user);
                     //intent.putExtra(drinksMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }

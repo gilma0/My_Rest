@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class AdminActivity extends AppCompatActivity {
     private Button addItem;
-    User user;//user to get from previous activity for order, even admin can order and act as user
+    private Button goToMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,9 +21,21 @@ public class AdminActivity extends AppCompatActivity {
                 moveToAddItem();
             }
         });
+        goToMenu = (Button) findViewById(R.id.goToMenu);
+        goToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movegoToMenu();
+            }
+        });
     }
     public void moveToAddItem(){
         Intent intent = new Intent(AdminActivity.this,AddItem.class);
         startActivity(intent);
     }
+    public void movegoToMenu(){
+        Intent intent = new Intent(AdminActivity.this,mainMenu.class);
+        startActivity(intent);
+    }
+
 }

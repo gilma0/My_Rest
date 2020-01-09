@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String adminPass;
     private String adminUser;
     private Button registerBtn, loginBtn;
+    private CheckBox registerAsAdmin;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         registerBtn = (Button) findViewById(R.id.registerButton);
         loginBtn = (Button) findViewById(R.id.loginButton);
+
+        registerAsAdmin = (CheckBox) findViewById(R.id.registerAsAdmin);
 
         getAdmin();
 
@@ -109,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             int pos = email.indexOf("@");
                             String userName = email.substring(0, pos);
                             String mail = userName + email.substring(pos,email.indexOf("."));
-                            User temp = new User(userName);
-                            mDatabaseReference = mDatabase.getReference().child("users").child(mail);
+                            User temp = new User(userName, registerAsAdmin.isChecked());
+                            mDatabaseReference = mDatabase.getReference().child("users").child(email.replace(".",",")); //was mail
                             mDatabaseReference.setValue(temp);
                             Toast.makeText(MainActivity.this, "Registered email: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
                         } else {
@@ -160,11 +164,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
                         if (task.isSuccessful()) {
-                            int pos = email.indexOf("@");
-                            String user = email.substring(0, pos);
+                            //int pos = email.indexOf("@");
+                            //String user = email.substring(0, pos);
                             Toast.makeText(MainActivity.this, "Welcome: " + TextEmail.getText(), Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplication(), UserActivity.class);
-                            intent.putExtra(UserActivity.user, user);
+                            intent.putExtra("userID", email);
                             startActivity(intent);
 
 
