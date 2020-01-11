@@ -22,6 +22,7 @@ public class UserActivity extends AppCompatActivity {
     static String user;
     ListView typeList;
     private FirebaseDatabase mydata;
+    private String delete;
     DatabaseReference myref;
     ArrayList<Item> list = new ArrayList<>();
     CustomListAdapter adapter;
@@ -32,6 +33,7 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
 
         user = getIntent().getExtras().getString("userID");
+        delete = getIntent().getExtras().getString("delete");
         typeList=(ListView)findViewById(R.id.typeList);
         mydata = FirebaseDatabase.getInstance();
         myref = mydata.getReference().child("typeIcons");
@@ -73,6 +75,7 @@ public class UserActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserActivity.this,menuOf.class);
                     intent.putExtra("type","Starters");
                     intent.putExtra("userID", user);
+                    intent.putExtra("delete",delete);
                     //intent.putExtra(startersMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
@@ -80,6 +83,7 @@ public class UserActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserActivity.this,menuOf.class);
                     intent.putExtra("type","Main");
                     intent.putExtra("userID", user);
+                    intent.putExtra("delete",delete);
                     //intent.putExtra(mainMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
@@ -87,6 +91,7 @@ public class UserActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserActivity.this,menuOf.class);
                     intent.putExtra("type","Deserts");
                     intent.putExtra("userID", user);
+                    intent.putExtra("delete",delete);
                     //intent.putExtra(desertsMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
@@ -94,6 +99,7 @@ public class UserActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserActivity.this,menuOf.class);
                     intent.putExtra("type","Drinks");
                     intent.putExtra("userID", user);
+                    intent.putExtra("delete",delete);
                     //intent.putExtra(drinksMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }
@@ -101,6 +107,7 @@ public class UserActivity extends AppCompatActivity {
                     Intent intent = new Intent(UserActivity.this,menuOf.class);
                     intent.putExtra("type","Alcohol");
                     intent.putExtra("userID", user);
+                    intent.putExtra("delete",delete);
                     //intent.putExtra(alcoholMenu.user, user); will send user to next activity
                     startActivity(intent);
                 }

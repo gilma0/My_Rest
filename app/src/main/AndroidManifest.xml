@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menuOf"></activity>
+        <activity android:name=".deleteActivity"></activity>
+        <activity android:name=".menuOf" />
         <activity android:name=".orderActivity" />
         <activity android:name=".AddItem" />
         <activity android:name=".AdminActivity" />

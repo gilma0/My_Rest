@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if(value.isAdmin() == false) {
                                 Intent intent = new Intent(getApplication(), UserActivity.class);
                                 intent.putExtra("userID", email);
+                                intent.putExtra("delete","false");
                                 startActivity(intent);
                             }else{
                                 Intent intent = new Intent(getApplication(), AdminActivity.class);

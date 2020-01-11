@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
 public class AdminActivity extends AppCompatActivity {
     private Button addItem;
     private Button goToMenu;
+    private Button deleteItem;
     String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,14 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
 
         user = getIntent().getExtras().getString("userID");
+
+        deleteItem = (Button) findViewById(R.id.deleteItem);
+        deleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveToDeleteItem();
+            }
+        });
 
         addItem = (Button) findViewById(R.id.addItem);
         addItem.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +39,7 @@ public class AdminActivity extends AppCompatActivity {
         goToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movegoToMenu();
+                moveGoToMenu();
             }
         });
     }
@@ -37,9 +47,16 @@ public class AdminActivity extends AppCompatActivity {
         Intent intent = new Intent(AdminActivity.this,AddItem.class);
         startActivity(intent);
     }
-    public void movegoToMenu(){
+    public void moveGoToMenu(){
         Intent intent = new Intent(AdminActivity.this,UserActivity.class);
         intent.putExtra("userID",user);
+        intent.putExtra("delete","false");
+        startActivity(intent);
+    }
+    public void moveToDeleteItem(){
+        Intent intent = new Intent(AdminActivity.this,UserActivity.class);
+        intent.putExtra("userID",user);
+        intent.putExtra("delete","true");
         startActivity(intent);
     }
 

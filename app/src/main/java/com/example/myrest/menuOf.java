@@ -24,6 +24,7 @@ public class menuOf extends AppCompatActivity {
     private ListView lv;
     private FirebaseDatabase mydata;
     static String user;
+    private String delete;
     DatabaseReference myref;
     ArrayList<Item> list = new ArrayList<>();
     CustomListAdapter adapter;
@@ -35,6 +36,7 @@ public class menuOf extends AppCompatActivity {
         setContentView(R.layout.activity_menu_of);
 
         user = getIntent().getExtras().getString("userID");
+        delete = getIntent().getExtras().getString("delete");
         mydata = FirebaseDatabase.getInstance();
         myref = mydata.getReference().child("menu").child(getIntent().getExtras().getString("type"));
 
@@ -73,14 +75,19 @@ public class menuOf extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
+                if(delete.equals("false")) {
+                    intent = new Intent(getApplication(), orderActivity.class);
+                }else{
+                    intent = new Intent(getApplication(), deleteActivity.class);
+                }
                 Item choice = list.get(position);
-                Toast.makeText(menuOf.this, keyList.get(position), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplication(), orderActivity.class);
                 intent.putExtra("userID", user);
                 intent.putExtra("itemName", choice.getName());
                 intent.putExtra("itemIMG", choice.getImageUrl());
                 intent.putExtra("itemID", keyList.get(position));
-                intent.putExtra("itemType", choice.getTypeOf());
+                intent.putExtra("itemType", getIntent().getExtras().getString("type"));
+                //Toast.makeText(getApplication(),choice.getTypeOf(),Toast.LENGTH_LONG).show();
                 intent.putExtra("itemDesc", choice.getDescription());
                 startActivity(intent);
             }
