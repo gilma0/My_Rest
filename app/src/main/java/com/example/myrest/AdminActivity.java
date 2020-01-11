@@ -10,10 +10,14 @@ import android.widget.Button;
 public class AdminActivity extends AppCompatActivity {
     private Button addItem;
     private Button goToMenu;
+    String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
+        user = getIntent().getExtras().getString("userID");
+
         addItem = (Button) findViewById(R.id.addItem);
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +38,8 @@ public class AdminActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void movegoToMenu(){
-        Intent intent = new Intent(AdminActivity.this,mainMenu.class);
+        Intent intent = new Intent(AdminActivity.this,UserActivity.class);
+        intent.putExtra("userID",user);
         startActivity(intent);
     }
 

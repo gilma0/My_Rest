@@ -24,9 +24,6 @@ public class orderActivity extends AppCompatActivity {
     static String itemDesc;
     static String itemType;
     ArrayList<Item> list = new ArrayList<>();
-    //private ImageView img;
-    //private TextView desc;
-    //private TextView name;
     private ListView lv;
     private Item item;
     private Button orderButton;
@@ -56,7 +53,7 @@ public class orderActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order order = new order(user.replace(".",","),itemID);
+                order order = new order(user.replace(".",","),itemID, itemName);
                 mDatabaseReference = mDatabase.getReference().child("orders").push();
                 mDatabaseReference.setValue(order);
             }

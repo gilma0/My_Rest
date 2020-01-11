@@ -7,14 +7,16 @@ public class order {
     private String userID;
     private String itemID;
     private String time;
+    private String itemName;
 
     public order(){
 
     }
-    public order(String userID, String itemID){
+    public order(String userID, String itemID, String itemName){
         this.itemID = itemID;
         this.userID = userID;
         this.time = Calendar.getInstance().getTime().toString();
+        this.itemName = itemName;
     }
     public String getUserID() {
         return userID;
@@ -36,5 +38,12 @@ public class order {
 
     public void setTime(String time) {
         this.time = time;
+    }
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }

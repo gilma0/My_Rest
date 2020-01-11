@@ -51,7 +51,7 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
         description = editDescription.getText().toString().trim();
         url = imageUrl.getText().toString().trim();
         Item item = new Item(type,name,description,url);
-        mDatabaseReference = mDatabase.getReference().child("menu").child(type).child(name);
+        mDatabaseReference = mDatabase.getReference().child("menu").child(type).push();
         mDatabaseReference.setValue(item);
     }
 
