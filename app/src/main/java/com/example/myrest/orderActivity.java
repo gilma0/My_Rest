@@ -2,7 +2,14 @@ package com.example.myrest;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,8 +63,32 @@ public class orderActivity extends AppCompatActivity {
                 order order = new order(user.replace(".",","),itemID, itemName);
                 mDatabaseReference = mDatabase.getReference().child("orders").push();
                 mDatabaseReference.setValue(order);
+                addNotification();
             }
         });
+
+
+
+    }
+
+    public void addNotification(){
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
+                    "CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("NOTIFICATION_CHANNEL_DISCRIPTION");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Ordered: " + itemName)
+                .setContentText("if there are any questions or problems be sure to contact us")
+                .setAutoCancel(true);
+        Intent intent = new Intent(getApplicationContext(), orderActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pi);
+        mNotificationManager.notify(0, mBuilder.build());
 
     }
 }

@@ -2,6 +2,8 @@ package com.example.myrest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -52,7 +54,23 @@ public class deleteActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.getReference().child("menu").child(itemType).child(itemID).removeValue();
+                AlertDialog alertDialog = new AlertDialog.Builder(deleteActivity.this).create();
+                alertDialog.setTitle("Are you sure?");
+                alertDialog.setMessage("The item will be deleted");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                mDatabase.getReference().child("menu").child(itemType).child(itemID).removeValue();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                //mDatabase.getReference().child("menu").child(itemType).child(itemID).removeValue();
                // mDatabaseReference.removeValue();
             }
         });

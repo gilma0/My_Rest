@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
     private User value;
+    private ImageButton callButton;
 
 
     @Override
@@ -56,6 +59,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loginBtn = (Button) findViewById(R.id.loginButton);
 
         registerAsAdmin = (CheckBox) findViewById(R.id.registerAsAdmin);
+
+        callButton = (ImageButton) findViewById(R.id.callButton);
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:054123456"));
+                startActivity(intent);
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
 
