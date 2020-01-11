@@ -42,6 +42,7 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
                 Add();
+                AddItem.this.finish();
             }
         });
     }

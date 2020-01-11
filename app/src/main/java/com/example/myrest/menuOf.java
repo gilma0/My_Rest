@@ -58,7 +58,7 @@ public class menuOf extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                menuOf.this.finish();
             }
 
             @Override

@@ -61,6 +61,7 @@ public class deleteActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 mDatabase.getReference().child("menu").child(itemType).child(itemID).removeValue();
+                                deleteActivity.this.finish();
                             }
                         });
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",

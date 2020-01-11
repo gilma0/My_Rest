@@ -64,6 +64,7 @@ public class orderActivity extends AppCompatActivity {
                 mDatabaseReference = mDatabase.getReference().child("orders").push();
                 mDatabaseReference.setValue(order);
                 addNotification();
+                orderActivity.this.finish();
             }
         });
 
