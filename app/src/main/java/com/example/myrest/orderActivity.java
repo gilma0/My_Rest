@@ -37,6 +37,7 @@ public class orderActivity extends AppCompatActivity {
     CustomListAdapter adapter;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
+    private order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class orderActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order order = new order(user.replace(".",","),itemID, itemName);
+                order = new order(user.replace(".",","),itemID, itemName);
                 mDatabaseReference = mDatabase.getReference().child("orders").push();
                 mDatabaseReference.setValue(order);
                 addNotification();

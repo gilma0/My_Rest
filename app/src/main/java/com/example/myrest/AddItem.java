@@ -41,19 +41,26 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Add();
-                AddItem.this.finish();
+                boolean boxes = Add();
+                if(boxes == true) {
+                    AddItem.this.finish();
+                }
             }
         });
     }
 
-    public void Add(){
+    public boolean Add(){
+        if(editName.getText().toString().trim().equals("") || editDescription.getText().toString().trim().equals("") || imageUrl.getText().toString().trim().equals("")){
+            Toast.makeText(this,"please fill all options", Toast.LENGTH_LONG).show();
+            return false;
+        }
         name = editName.getText().toString().trim();
         description = editDescription.getText().toString().trim();
         url = imageUrl.getText().toString().trim();
         Item item = new Item(type,name,description,url);
         mDatabaseReference = mDatabase.getReference().child("menu").child(type).push();
         mDatabaseReference.setValue(item);
+        return true;
     }
 
     @Override
