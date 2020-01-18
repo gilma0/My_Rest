@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItem extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private String type,name, description, url;
-    private EditText editName, imageUrl, editDescription;
+    private EditText editName, imageUrl, editDescription, editPrice;
     private Button add;
     private Item item;
     private FirebaseAuth firebaseAuth;
@@ -36,6 +36,7 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
         spinner.setOnItemSelectedListener(this);
         editName = (EditText) findViewById(R.id.editName);
         imageUrl = (EditText) findViewById(R.id.imageUrl);
+        editPrice = (EditText) findViewById(R.id.editPrice);
         editDescription = (EditText) findViewById(R.id.editDescription);
         add = (Button) findViewById(R.id.button);
         add.setOnClickListener(new View.OnClickListener() {
@@ -50,12 +51,12 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     public boolean Add(){
-        if(editName.getText().toString().trim().equals("") || editDescription.getText().toString().trim().equals("") || imageUrl.getText().toString().trim().equals("")){
+        if(editPrice.getText().toString().trim().equals("") ||  editName.getText().toString().trim().equals("") || editDescription.getText().toString().trim().equals("") || imageUrl.getText().toString().trim().equals("")){
             Toast.makeText(this,"please fill all options", Toast.LENGTH_LONG).show();
             return false;
         }
         name = editName.getText().toString().trim();
-        description = editDescription.getText().toString().trim();
+        description = editDescription.getText().toString().trim() + "\nPrice: " + editPrice.getText().toString().trim();
         url = imageUrl.getText().toString().trim();
         Item item = new Item(type,name,description,url);
         mDatabaseReference = mDatabase.getReference().child("menu").child(type).push();
